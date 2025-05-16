@@ -1,0 +1,72 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #e60000; /* Venom-inspired red */
+    text-transform: uppercase;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+}
+
+.subtitle {
+    font-size: 24px;
+    color: #ddd;
+    margin-top: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cta-btn {
+    display: inline-block;
+    background-color: #e60000;
+    color: white;
+    padding: 15px 30px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.cta-btn:hover {
+    background-color: #d40000;
+    transform: scale(1.1);
+}
+
+/* Logo Styling */
+.codex-logo {
+    width: 200px;
+    height: auto;
+    margin-top: 50px;
+    animation: logoAnimation 1.5s ease-in-out infinite alternate;
+}
+
+/* Animation */
+@keyframes logoAnimation {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
