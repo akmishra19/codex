@@ -1,25 +1,43 @@
-name: CI/CD Pipeline
+name: Deploy CodexJar
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up JDK 17
+    - name: Set up Java 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Build with Maven
+    - name: Build JAR
       run: mvn clean install
 
-    - name: Run tests
-      run: mvn test
+    - name: Create SSH key file
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+        chmod 600 key.pem
+
+    - name: Add EC2 to known hosts
+      run: |
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+   - name: Rename JAR to codex.jar
+     run: |
+    mv target/*.jar target/codex.jar
+
+    - name: Copy JAR to EC2
+      run: |
+        scp -i key.pem target/*.jar ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:~/codex.jar
+
+    - name: Restart codexjar service on EC2
+      run: |
+        ssh -i key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "sudo systemctl restart codexjar && sudo systemctl status codexjar --no-pager"
