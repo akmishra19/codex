@@ -28,11 +28,11 @@ jobs:
 
     - name: Add EC2 to known hosts
       run: |
+        mkdir -p ~/.ssh
         ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
     - name: Rename JAR to codex.jar
-      run: |
-        mv target/*.jar target/codex.jar
+      run: mv target/*.jar target/codex.jar
 
     - name: Copy JAR to EC2
       run: |
